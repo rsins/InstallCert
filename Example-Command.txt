@@ -1,0 +1,11 @@
+# Installing Java Certificate 
+https://github.com/escline/InstallCert
+	
+# Access server, and retrieve certificate (accept default certificate 1)
+java InstallCert plugins-artifacts.gradle.org:443
+	
+# Extract certificate from created jssecacerts keystore
+keytool -exportcert -alias plugins-artifacts.gradle.org-1 -keystore jssecacerts -storepass changeit -file plugins-artifacts.gradle.org.cer
+	
+# Import certificate into system keystore
+sudo keytool -importcert -alias plugins-artifacts.gradle.org -keystore $JAVA_HOME/jre/lib/security/cacerts -storepass changeit -file plugins-artifacts.gradle.org.cer
