@@ -1,3 +1,4 @@
+# ------------------------------------  Add 1 --------------------------------------------
 # Installing Java Certificate 
 https://github.com/escline/InstallCert
 	
@@ -9,3 +10,26 @@ keytool -exportcert -alias plugins-artifacts.gradle.org-1 -keystore jssecacerts 
 	
 # Import certificate into system keystore
 sudo keytool -importcert -alias plugins-artifacts.gradle.org -keystore $JAVA_HOME/jre/lib/security/cacerts -storepass changeit -file plugins-artifacts.gradle.org.cer
+
+
+# ------------------------------------  Add 2 --------------------------------------------
+# Access server, and retrieve certificate (accept default certificate 1)
+java InstallCert jcenter.bintray.com:443
+
+# Extract certificate from created jssecacerts keystore
+keytool -exportcert -alias jcenter.bintray.com-1 -keystore jssecacerts -storepass changeit -file jcenter.bintray.com.cer
+
+# Import certificate into system keystore
+sudo keytool -importcert -alias jcenter.bintray.com -keystore $JAVA_HOME/jre/lib/security/cacerts -storepass changeit -file jcenter.bintray.com.cer
+
+
+# ------------------------------------  Remove 1 --------------------------------------------
+# Remove installed certificate 
+sudo keytool -delete -alias plugins-artifacts.gradle.org -keystore $JAVA_HOME/jre/lib/security/cacerts -storepass changeit
+sudo keytool -delete -alias plugins-artifacts.gradle.org-1 -keystore jssecacerts -storepass changeit
+
+
+# ------------------------------------  Remove 2 --------------------------------------------
+# Remove installed certificate 
+sudo keytool -delete -alias jcenter.bintray.com -keystore $JAVA_HOME/jre/lib/security/cacerts -storepass changeit
+sudo keytool -delete -alias jcenter.bintray.com-1 -keystore jssecacerts -storepass changeit
